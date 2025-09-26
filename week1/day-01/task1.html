@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Karthi's basic webpage</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      min-height: 100vh;
+      background-color:rgb(99, 167, 223);
+    }
+
+    header {
+      background: #333;
+      color: white;
+      padding: 1rem;
+    }
+
+    nav {
+      display: grid;
+      grid-auto-flow: column;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: rgb(245, 232, 232);
+      text-decoration:solid;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: 1fr; /* Always one column */
+      gap: 2rem;
+      justify-items: center;
+      padding: 2rem;
+    }
+
+    section {
+      max-width:500px;
+      width: 50%;
+      padding: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: #e9ece9;
+    }
+
+    #photo img {
+      max-width:190px;
+      border-radius: 40px;
+    }
+
+    footer {
+      text-align: center;
+      background: #f4f4f4;
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="#about">ABOUT MYSELF</a>
+      <a href="#photo">ME</a>
+      <a href="#contact">CONTACT ME</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="about">
+      <h2>About Myself</h2>
+      <p>Hello! This is KARTHIK TL,<br>5 th sem,CSE<BR>Intern @ AEROASPIRE</p>
+    </section>
+
+    <section id="photo">
+      <h2>ME</h2>
+      <img src="pic.jpg" alt="My photo">
+    </section>
+  </main>
+
+  <footer>
+    <p>Contact me:</p>
+    <p>Phone:9632749580</p>
+    <p>Email:karthiktl143@gmail.com</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>task2</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    #toggleSection {
+      padding: 15px;
+      margin-top: 10px;
+      background: #edebeb;
+      border: 1px solid #ededed;
+    }
+    .error {
+      color: red;
+      font-size: 0.9em;
+    }
+    .result {
+      margin-top: 15px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background: #baecba;
+    }
+  </style>
+</head>
+<body>
+  <h2 id="greeting"></h2>
+
+  <!-- Toggle Section -->
+  <button onclick="toggleSection()">click here</button>
+  <div id="toggleSection">
+    <p>this is the section which will we visible when i click on the button </p>
+  </div>
+
+  <!-- Form -->
+  <h3>Fill Your Details</h3>
+  <form id="userForm">
+    <label>
+      Name: <input type="text" id="name" required>
+    </label><br><br>
+    <label>
+      Email: <input type="email" id="email" required>
+    </label><br><br>
+    <button type="submit">Submit</button>
+    <div id="errorMsg" class="error"></div>
+  </form>
+
+  <!-- Display Submitted Data -->
+  <div id="output" class="result" style="display:none;"></div>
+  <script>
+    // 1. Greeting based on time
+    function showGreeting() {
+      const hour = new Date().getHours();
+      let greetingText = "Hello!";
+      if (hour < 12) {
+        greetingText = "Good Morning!";
+      } else if (hour < 18) {
+        greetingText = "Good Afternoon!";
+      } else {
+        greetingText = "Good Evening!";
+      }
+      document.getElementById("greeting").textContent = greetingText;
+    }
+    showGreeting();
+
+    // 2. Toggle section
+    function toggleSection() {
+      const section = document.getElementById("toggleSection");
+      section.style.display = (section.style.display === "none") ? "block" : "none";
+    }
+
+    // 3. Form submit without reload + validation
+    document.getElementById("userForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // prevent reload
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const errorMsg = document.getElementById("errorMsg");
+      const output = document.getElementById("output");
+
+      // Validation
+      if (name === "" || email === "") {
+        errorMsg.textContent = "Both fields are required.";
+        output.style.display = "none";
+        return;
+      }
+
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        errorMsg.textContent = "please entr the email correctly!!";
+        output.style.display = "none";
+        return;
+      }
+
+      // If valid
+      errorMsg.textContent = "";
+      output.style.display = "block";
+      output.innerHTML = `<strong>Submitted Data:</strong><br>
+                          Name: ${name}<br>
+                          Email: ${email}`;
+    });
+  </script>
+
+</body>
+</html>
