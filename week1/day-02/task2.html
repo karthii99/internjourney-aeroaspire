@@ -27,14 +27,10 @@
 </head>
 <body>
   <h2 id="greeting"></h2>
-
-  <!-- Toggle Section -->
   <button onclick="toggleSection()">click here</button>
   <div id="toggleSection">
     <p>this is the section which will we visible when i click on the button </p>
   </div>
-
-  <!-- Form -->
   <h3>Fill Your Details</h3>
   <form id="userForm">
     <label>
@@ -46,11 +42,8 @@
     <button type="submit">Submit</button>
     <div id="errorMsg" class="error"></div>
   </form>
-
-  <!-- Display Submitted Data -->
   <div id="output" class="result" style="display:none;"></div>
   <script>
-    // 1. Greeting based on time
     function showGreeting() {
       const hour = new Date().getHours();
       let greetingText = "Hello!";
@@ -64,14 +57,10 @@
       document.getElementById("greeting").textContent = greetingText;
     }
     showGreeting();
-
-    // 2. Toggle section
     function toggleSection() {
       const section = document.getElementById("toggleSection");
       section.style.display = (section.style.display === "none") ? "block" : "none";
     }
-
-    // 3. Form submit without reload + validation
     document.getElementById("userForm").addEventListener("submit", function(event) {
       event.preventDefault(); // prevent reload
 
