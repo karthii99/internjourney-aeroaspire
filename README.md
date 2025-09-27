@@ -7,5 +7,4 @@ This repository contains the code for my GitHub Pages website.
 You can view the live site here:  
 [https://karthii99.github.io/githubpages/](https://karthii99.github.io/githubpages/)
 
-## Project Structure
 
