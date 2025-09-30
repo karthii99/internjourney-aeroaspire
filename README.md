@@ -1,10 +1,12 @@
-# My GitHub Pages Project
+## 👋 Hi there! I’m Karthik
 
-This repository contains the code for my GitHub Pages website.  
+### 🚀 Skills
+- C
+- Python
+- HTML
+- CSS
+- JavaScript
+- Java
 
-## Live Site
-
-You can view the live site here:  
-[https://karthii99.github.io/githubpages/](https://karthii99.github.io/githubpages/)
-
-
+### 📜 Certifications
+- NPTEL: Data Structures and Algorithms in Python
