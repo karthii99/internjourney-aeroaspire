@@ -43,4 +43,36 @@ src/App.js
 ```
 npm start
 ```
+# 📝 Week2 Day2
+
+## Task
+
+- TaskCard component 
+- render list of dummy tasks via props
+
+## Gallery
+
+![Screenshot 1](./src/assets/sc2.jpeg)
+### about
+- updated the same day-1 code by adding taskcard.jsx
+
+# 📝 Week2 Day3
+
+## Task
+
+- Add ability to add tasks; manage state; 
+- fetch effects if needed (dummy), 
+- Create form using MUI TextFields and Buttons; 
+- validate required inputs / length / number etc.
+
+## Gallery
+
+![Screenshot 1](./src/assets/sc3.jpeg)
+ 
+
+
+
+
+
+
 
