@@ -5,7 +5,7 @@
 - setup basic folder structure 
 - Create homepage with MUI Typography and AppBar
 
-## Gallery
+## screenshot
 
 ![Screenshot 1](./src/assets/sc1.jpeg)
 
@@ -50,7 +50,7 @@ npm start
 - TaskCard component 
 - render list of dummy tasks via props
 
-## Gallery
+## screenshot
 
 ![Screenshot 1](./src/assets/sc2.jpeg)
 ### about
@@ -65,9 +65,43 @@ npm start
 - Create form using MUI TextFields and Buttons; 
 - validate required inputs / length / number etc.
 
-## Gallery
+## screenshot
 
 ![Screenshot 1](./src/assets/sc3.jpeg)
+
+# 📝 Week2 Day4
+
+## Task
+
+- Add routing: Home, Add Task, About; 
+- navigation bar, Save tasks to localStorage;
+- load on mount; polish UI; icons; 
+- Theming;
+
+## screenshot
+
+### The above images shows light and dark theme with navigation bar 
+
+![Screenshot 1](./src/assets/sc4.jpeg)
+![Screenshot 1](./src/assets/sc5.jpeg)
+
+
+# 📝 Week2 Day5
+
+## Task
+
+- Add search/filter UI; 
+- theme toggle (light/dark) if possible; polish
+
+## screenshot
+
+### i have added search and filter based on priority and title
+
+### search based on priority
+![Screenshot 1](./src/assets/sc7.jpeg)
+
+### search based on title
+![Screenshot 1](./src/assets/sc6.jpeg)
  
 
 
