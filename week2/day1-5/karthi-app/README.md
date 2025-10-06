@@ -102,6 +102,7 @@ npm start
 
 ### search based on title
 ![Screenshot 1](./src/assets/sc6.jpeg)
+
  
 
 
