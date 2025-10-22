@@ -1,87 +1,37 @@
 import React, { useState } from "react";
-import {
-  Box,
-  TextField,
-  Button,
-  Typography,
-  Paper,
-  Stack,
-  Snackbar,
-} from "@mui/material";
+import { addTask } from "../api";
 import { useNavigate } from "react-router-dom";
+import { Container, Typography, TextField, Button } from "@mui/material";
 
-export default function AddTask({ onAdd }) {
+export default function AddTask() {
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState("");
-  const [snackOpen, setSnackOpen] = useState(false);
-  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!title.trim()) {
-      setError("Title is required");
-      return;
+    if (!title.trim()) return alert("Enter a task title");
+    try {
+      await addTask(title);
+      navigate("/"); // back to Home
+    } catch (err) {
+      console.error(err);
+      alert("Failed to add task");
     }
-
-    const newTask = {
-      id: Date.now(),
-      title: title.trim(),
-      description: description.trim(),
-      priority: priority || "N/A",
-    };
-
-    onAdd(newTask);
-    setSnackOpen(true);
-    setTitle("");
-    setDescription("");
-    setPriority("");
-    setError("");
-
-    setTimeout(() => navigate("/"), 1000);
   };
 
   return (
-    <Paper sx={{ p: 3 }}>
-      <Typography variant="h5" gutterBottom>
-        Add a Task
-      </Typography>
+    <Container sx={{ mt: 4 }}>
+      <Typography variant="h4" gutterBottom>Add New Task</Typography>
       <form onSubmit={handleSubmit}>
-        <Stack spacing={2}>
-          <TextField
-            label="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-            error={!!error}
-            helperText={error}
-          />
-          <TextField
-            label="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <TextField
-            label="Priority (1-5)"
-            type="number"
-            inputProps={{ min: 1, max: 5 }}
-            value={priority}
-            onChange={(e) => setPriority(e.target.value)}
-          />
-          <Button type="submit" variant="contained">
-            Add Task
-          </Button>
-        </Stack>
+        <TextField
+          label="Task Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+        <Button variant="contained" type="submit">Add Task</Button>
       </form>
-
-      <Snackbar
-        open={snackOpen}
-        autoHideDuration={1000}
-        onClose={() => setSnackOpen(false)}
-        message="Task added!"
-      />
-    </Paper>
+    </Container>
   );
 }

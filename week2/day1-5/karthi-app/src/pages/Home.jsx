@@ -1,99 +1,63 @@
-// pages/Home.jsx
 import React, { useEffect, useState } from "react";
-import {
-  Card,
-  CardContent,
-  Typography,
-  IconButton,
-  TextField,
-  MenuItem,
-  Stack,
-} from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import SearchIcon from "@mui/icons-material/Search";
+import { getTasks, updateTask, deleteTask } from "../api";
+import TaskCard from "../components/TaskCard";
+import { Container, Typography, Grid } from "@mui/material";
 
 export default function Home() {
   const [tasks, setTasks] = useState([]);
-  const [search, setSearch] = useState("");
-  const [filterPriority, setFilterPriority] = useState("");
 
-  useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("tasks")) || [];
-    setTasks(stored);
-  }, []);
-
-  const deleteTask = (index) => {
-    const updated = tasks.filter((_, i) => i !== index);
-    setTasks(updated);
-    localStorage.setItem("tasks", JSON.stringify(updated));
+  const fetchTasks = async () => {
+    try {
+      const res = await getTasks();
+      setTasks(res.data);
+    } catch (err) {
+      console.error("Error fetching tasks:", err);
+    }
   };
 
-  const filteredTasks = tasks.filter((task) => {
-    const matchesSearch = task.title
-      .toLowerCase()
-      .includes(search.toLowerCase());
-    const matchesPriority =
-      !filterPriority || task.priority === filterPriority;
-    return matchesSearch && matchesPriority;
-  });
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
+  const handleToggle = async (id, done) => {
+    try {
+      await updateTask(id, { done: !done });
+      fetchTasks();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteTask(id);
+      fetchTasks();
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
-    <div>
-      <Typography variant="h5" gutterBottom>
-        Tasks
-      </Typography>
-
-      <Stack
-        direction={{ xs: "column", sm: "row" }}
-        spacing={2}
-        sx={{ mb: 3 }}
-      >
-        <TextField
-          label="Search by Title"
-          variant="outlined"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          InputProps={{
-            endAdornment: <SearchIcon color="action" />,
-          }}
-          fullWidth
-        />
-        <TextField
-          select
-          label="Filter by Priority"
-          value={filterPriority}
-          onChange={(e) => setFilterPriority(e.target.value)}
-          fullWidth
-        >
-          <MenuItem value="">All</MenuItem>
-          {[1, 2, 3, 4, 5].map((p) => (
-            <MenuItem key={p} value={String(p)}>
-              {p}
-            </MenuItem>
-          ))}
-        </TextField>
-      </Stack>
-
-      {filteredTasks.length === 0 ? (
-        <Typography>No matching tasks</Typography>
+    <Container sx={{ mt: 4 }}>
+      <Typography variant="h4" gutterBottom>My Tasks</Typography>
+      {tasks.length === 0 ? (
+        <Typography>No tasks found</Typography>
       ) : (
-        filteredTasks.map((task, i) => (
-          <Card key={i} sx={{ mb: 2, p: 1 }}>
-            <CardContent>
-              <Typography variant="h6">{task.title}</Typography>
-              <Typography>{task.description}</Typography>
-              <Typography sx={{ mt: 1 }}>Priority: {task.priority}</Typography>
-              <IconButton
-                color="error"
-                onClick={() => deleteTask(i)}
-                aria-label="delete"
-              >
-                <DeleteIcon />
-              </IconButton>
-            </CardContent>
-          </Card>
-        ))
+        <Grid container spacing={2}>
+          {tasks.map((task) => 
+            task && task.title ? (
+              <Grid item xs={12} sm={6} md={4} key={task.id}>
+                <TaskCard
+                  title={task.title}
+                  done={task.done}
+                  onToggle={() => handleToggle(task.id, task.done)}
+                  onDelete={() => handleDelete(task.id)}
+                />
+              </Grid>
+            ) : null
+          )}
+        </Grid>
       )}
-    </div>
+    </Container>
   );
 }

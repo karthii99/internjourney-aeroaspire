@@ -1,69 +1,28 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
-import {
-  createTheme,
-  ThemeProvider,
-  CssBaseline,
-  Container,
-} from "@mui/material";
-
-import NavBar from "./components/NavBar";
+import React from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import { AppBar, Toolbar, Typography, Button } from "@mui/material";
 import Home from "./pages/Home";
 import AddTask from "./pages/AddTask";
-import About from "./pages/About";
 
 export default function App() {
-  // --- state ---
-  const [tasks, setTasks] = useState([]);
-  const [mode, setMode] = useState("light");
-
-  // --- load from localStorage ---
-  useEffect(() => {
-    const stored = localStorage.getItem("tasks");
-    if (stored) setTasks(JSON.parse(stored));
-    const storedMode = localStorage.getItem("theme");
-    if (storedMode) setMode(storedMode);
-  }, []);
-
-  // --- save to localStorage ---
-  useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
-  useEffect(() => {
-    localStorage.setItem("theme", mode);
-  }, [mode]);
-
-  // --- theme setup ---
-  const theme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-          primary: { main: "#1976d2" },
-          secondary: { main: "#ff9800" },
-        },
-      }),
-    [mode]
-  );
-
-  // --- handlers ---
-  const addTask = (task) => setTasks((prev) => [task, ...prev]);
-  const deleteTask = (id) =>
-    setTasks((prev) => prev.filter((t) => t.id !== id));
-
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <NavBar mode={mode} setMode={setMode} />
+    <>
+      {/* Top navigation bar */}
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            Task Manager
+          </Typography>
+          <Button color="inherit" component={Link} to="/">Home</Button>
+          <Button color="inherit" component={Link} to="/add">Add Task</Button>
+        </Toolbar>
+      </AppBar>
 
-      <Container sx={{ mt: 4, mb: 6 }}>
-        <Routes>
-          <Route path="/" element={<Home tasks={tasks} onDelete={deleteTask} />} />
-          <Route path="/add" element={<AddTask onAdd={addTask} />} />
-          <Route path="/about" element={<About />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Container>
-    </ThemeProvider>
+      {/* App routes */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/add" element={<AddTask />} />
+      </Routes>
+    </>
   );
 }
