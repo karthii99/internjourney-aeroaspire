@@ -1,14 +1,31 @@
-from flask import jsonify
+from . import db
+from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 
-def register_error_handlers(app):
-    @app.errorhandler(404)
-    def not_found(e):
-        return jsonify({"error": "Resource not found"}), 404
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(200), nullable=False)
 
-    @app.errorhandler(400)
-    def bad_request(e):
-        return jsonify({"error": "Bad request"}), 400
+    @staticmethod
+    def generate_hash(password):
+        return generate_password_hash(password, method='pbkdf2:sha256')
 
-    @app.errorhandler(500)
-    def internal_error(e):
-        return jsonify({"error": "Internal server error"}), 500
+    @staticmethod
+    def verify_hash(password, hashed):
+        return check_password_hash(hashed, password)
+
+    def __repr__(self):
+        return f"<User {self.username}>"
+
+class Task(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(200))
+    status = db.Column(db.String(20), default='pending')
+    due_date = db.Column(db.DateTime)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f"<Task {self.title}>"

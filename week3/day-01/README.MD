@@ -61,5 +61,15 @@ Response:
 
 ## **3.GALLERY:
 
-![Screenshot 1](day-01\images\img1.png)
+### **GET /tasks**
+Fetch all tasks.
+
+![Screenshot 1](./images/img1.png)
+
+### **POST /tasks**
+add all tasks.
+
+![Screenshot 1](./images/img2.png)
+
+
 
